@@ -1,0 +1,966 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="React," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="React 中的条件渲染有以下几种方式：
+
+if 语句
+三元操作符(ternary operator)
+逻辑 &amp;amp;&amp;amp; 操作符
+switch.. case.. 语句
+枚举(enums)
+多层条件渲染(multi-level conditional reandering)
+使用高阶组件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React 中的条件渲染">
+<meta property="og:url" content="http://yoursite.com/2017/02/23/React-中的条件渲染/index.html">
+<meta property="og:site_name" content="祁文涛">
+<meta property="og:description" content="React 中的条件渲染有以下几种方式：
+
+if 语句
+三元操作符(ternary operator)
+逻辑 &amp;amp;&amp;amp; 操作符
+switch.. case.. 语句
+枚举(enums)
+多层条件渲染(multi-level conditional reandering)
+使用高阶组件">
+<meta property="og:updated_time" content="2017-02-23T10:54:04.410Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React 中的条件渲染">
+<meta name="twitter:description" content="React 中的条件渲染有以下几种方式：
+
+if 语句
+三元操作符(ternary operator)
+逻辑 &amp;amp;&amp;amp; 操作符
+switch.. case.. 语句
+枚举(enums)
+多层条件渲染(multi-level conditional reandering)
+使用高阶组件">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/23/React-中的条件渲染/"/>
+
+
+
+
+
+  <title> React 中的条件渲染 | 祁文涛 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">祁文涛</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/23/React-中的条件渲染/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="James Sawyer">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/tiger.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="祁文涛">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="祁文涛" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                React 中的条件渲染
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-23T18:51:56+08:00">
+                2017-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/23/React-中的条件渲染/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/23/React-中的条件渲染/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/02/23/React-中的条件渲染/" class="leancloud_visitors" data-flag-title="React 中的条件渲染">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>React 中的条件渲染有以下几种方式：</p>
+<ul>
+<li>if 语句</li>
+<li>三元操作符(ternary operator)</li>
+<li>逻辑 <strong>&amp;&amp;</strong> 操作符</li>
+<li>switch.. case.. 语句</li>
+<li>枚举(enums)</li>
+<li>多层条件渲染(multi-level conditional reandering)</li>
+<li>使用高阶组件</li>
+</ul>
+<a id="more"></a>
+<h2 id="1-if-语句"><a href="#1-if-语句" class="headerlink" title="1.if 语句"></a>1.if 语句</h2><p>在React中使用if语句条件渲染是最简单的。比如List组件如果没有任何items,可以提前return</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">function List(&#123; list &#125;) &#123;</div><div class="line">  if (!list) &#123;</div><div class="line">    return null;</div><div class="line">  &#125;</div><div class="line">  return (</div><div class="line">    &lt;div&gt;</div><div class="line">      &#123;list.map(item =&gt; &lt;ListItem item=&#123;item&#125; /&gt;)&#125;</div><div class="line">    &lt;/div&gt;</div><div class="line">  );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>一个组件如果<code>return null</code>,将不会被渲染出来。如果你想给用户一些反馈，当list为空时，可以采用下面方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">function List(&#123; list &#125;) &#123;</div><div class="line">  // list 为null的情况</div><div class="line">  if (!list) &#123;</div><div class="line">    return null;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  // list 为空的情况</div><div class="line">  if (!list.length) &#123;</div><div class="line">    return &lt;p&gt;sorry, the list is empty&lt;/p&gt;</div><div class="line">  &#125; else &#123;</div><div class="line">    return (</div><div class="line">      &lt;div&gt;</div><div class="line">        &#123;list.map(item =&gt; &lt;ListItem item=&#123;item&#125; /&gt;)&#125;</div><div class="line">      &lt;/div&gt;</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>if…else</strong> 是最基本的条件渲染方式。</p>
+<h2 id="2-三元操作符"><a href="#2-三元操作符" class="headerlink" title="2.三元操作符"></a>2.三元操作符</h2><p>可以使用三元运算符来代替上面的<code>if...else...</code> 条件渲染。</p>
+<p>例如，你想从2种模式(edit, view)中切换，可以使用布尔值来决定那个组件被渲染：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">function Item(&#123; item, mode &#125;) &#123;</div><div class="line">  const isEditMode = mode === &apos;EDIT&apos;;</div><div class="line"></div><div class="line">  return (</div><div class="line">    &lt;div&gt;</div><div class="line">      &#123; isEditMode</div><div class="line">          ? &lt;ItemEdit item=&#123;item&#125; /&gt;</div><div class="line">          : &lt;ItemView item=&#123;item&#125;&gt;</div><div class="line">      &#125;</div><div class="line">    &lt;/div&gt;</div><div class="line">  );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>三元运算符使条件渲染更加的简洁,使得代码可以采用<strong>内联</strong>(inline)的方式表达出来</p>
+<h2 id="3-逻辑-‘-amp-amp-’-操作符"><a href="#3-逻辑-‘-amp-amp-’-操作符" class="headerlink" title="3.逻辑 ‘&amp;&amp;’ 操作符"></a>3.逻辑 ‘&amp;&amp;’ 操作符</h2><p><strong>这个是当你想渲染一个组件或者什么也不渲染的情况</strong>。</p>
+<p>例如，有一个 <strong><code>LoadingIndicator</code></strong> 组件,返回加载文字或者什么也没有。当然可以使用<strong>if…else</strong>或者<strong>三元运算符</strong>,如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">function LoadingIndicator(&#123; isLoading &#125;) &#123;</div><div class="line">  if (isLoading) &#123;</div><div class="line">    return (</div><div class="line">      &lt;div&gt;</div><div class="line">        &lt;p&gt;Loading...&lt;/p&gt;</div><div class="line">      &lt;/div&gt;</div><div class="line">    );</div><div class="line">  &#125; else &#123;</div><div class="line">    return null;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">function LoadingIndicator(&#123; isLoading &#125;) &#123;</div><div class="line">  return (</div><div class="line">    &lt;div&gt;</div><div class="line">      &#123; isLoading</div><div class="line">          ? &lt;p&gt;Loading...&lt;/p&gt;</div><div class="line">          : null</div><div class="line">      &#125;</div><div class="line">    &lt;/div&gt;</div><div class="line">  );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>使用 <code>&amp;&amp;</code> 可以使返回 null 的情况的条件渲染更加的简洁</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function LoadingIndicator(&#123; isLoading &#125;) &#123;</div><div class="line">  return (</div><div class="line">    &lt;div&gt;</div><div class="line">      &#123; isLoading &amp;&amp; &lt;p&gt;Loading...&lt;/p&gt; &#125;</div><div class="line">    &lt;/div&gt;</div><div class="line">  );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="4-switch…case语句"><a href="#4-switch…case语句" class="headerlink" title="4.switch…case语句"></a>4.switch…case语句</h2><p>我们有可能遇到多种条件渲染的情况，例如依据不同的state渲染不同的Component.</p>
+<p>例如，<strong>Notification</strong> 组件根据输入状态可能渲染Error,Warning,Info三种不同的组件。这个时候可以使用switch…case来进行多种条件渲染：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">function Notification(&#123; text, state &#125;) &#123;</div><div class="line">  switch (state) &#123;</div><div class="line">    case &apos;info&apos;:</div><div class="line">      return &lt;Info text=&#123;text&#125; /&gt;;</div><div class="line">    case &apos;warning&apos;:</div><div class="line">      return &lt;Warning text=&#123;text&#125; /&gt;;</div><div class="line">    case &apos;info&apos;:</div><div class="line">      return &lt;Info text=&#123;text&#125; /&gt;;</div><div class="line">    default:</div><div class="line">      return null;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意<strong>switch…case</strong>语句永远要加上<strong>default</strong>情况，因为React组件要么返回元素，要么返回null</p>
+<p>另外值得注意的是，如果组件依据 <em>state</em> 属性 渲染时，最后添加上 <strong>React.PropTypes</strong>,即上面的组件后面添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Notification.propTypes = &#123;</div><div class="line">  text: React.PropTypes.string,</div><div class="line">  state: React.PropTypes.oneOf([&apos;info&apos;, &apos;warning&apos;, &apos;error&apos;])</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>另一种将条件渲染结果内联在switch…case中的方法是，使用立即调用函数</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">function Notification(&#123; text, state &#125;) &#123;</div><div class="line">  return (</div><div class="line">    &lt;div&gt;</div><div class="line">      &#123;(() =&gt; &#123;</div><div class="line">          switch (state) &#123;</div><div class="line">            case &apos;info&apos;:</div><div class="line">              return &lt;Info text=&#123;text&#125; /&gt;;</div><div class="line">            case &apos;warning&apos;:</div><div class="line">              return &lt;Warning text=&#123;text&#125; /&gt;;</div><div class="line">            case &apos;info&apos;:</div><div class="line">              return &lt;Info text=&#123;text&#125; /&gt;;</div><div class="line">            default:</div><div class="line">              return null;</div><div class="line">          &#125;</div><div class="line">      &#125;)()&#125;</div><div class="line">    &lt;/div&gt;  </div><div class="line">  );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>switch...case</code>帮助我们在多种条件中渲染中使用，但是多种条件渲染最好的方式是<strong>枚举</strong></p>
+<h2 id="5-枚举-Enums"><a href="#5-枚举-Enums" class="headerlink" title="5.枚举(Enums)"></a>5.枚举(Enums)</h2><p>在javascript中，对象的键值对可以用作枚举：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">const ENUM = &#123;</div><div class="line">  a: &apos;1&apos;,</div><div class="line">  b: &apos;2&apos;,</div><div class="line">  c: &apos;3&apos;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>枚举是多种条件渲染中很好的一种方式，上面的 <strong>Notification</strong> 组件可以写为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">function Notification(&#123; text, state &#125;) &#123;</div><div class="line">  return (</div><div class="line">    &lt;div&gt;</div><div class="line">      &#123;&#123;</div><div class="line">        info: &lt;Info text=&#123;text&#125; /&gt;,</div><div class="line">        warning: &lt;Warning text=&#123;text&#125; /&gt;,</div><div class="line">        error: &lt;Error text=&#123;text&#125; /&gt;</div><div class="line">      &#125;[state]&#125;</div><div class="line">    &lt;/div&gt;</div><div class="line">  )</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的 <em>state</em> 属性用于取回对象中的值，这比switch…case可读性更强。</p>
+<p>因为对象的值依赖 <code>text</code> 属性，所以我们必须使用内联对象。如果我们不需要text属性，我们可以使用外部静态枚举：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">const NOTIFICATION_STATES = &#123;</div><div class="line">  info: &lt;Infor /&gt;,</div><div class="line">  warning: &lt;Warning /&gt;,</div><div class="line">  error: &lt;Error /&gt;,</div><div class="line">&#125;;</div><div class="line"></div><div class="line">function Notification(&#123; state &#125;) &#123;</div><div class="line">  return (</div><div class="line">    &lt;div&gt;</div><div class="line">      &#123;NOTIFICATION_STATES[state]&#125;</div><div class="line">    &lt;/div&gt;</div><div class="line">  )</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果我们需要text属性，我们可以使用函数取回对象的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">const getSpecificNotification = (text) =&gt; (&#123;</div><div class="line">  info: &lt;Info text=&#123;text&#125; /&gt;,</div><div class="line">  warning: &lt;Warning text=&#123;text&#125; /&gt;,</div><div class="line">  error: &lt;Error text=&#123;text&#125; /&gt;,</div><div class="line">&#125;);</div><div class="line"></div><div class="line">function Notification(&#123; state, text &#125;) &#123;</div><div class="line">  return (</div><div class="line">    &lt;div&gt;</div><div class="line">      &#123;getSpecificNotification(text)[state]&#125;</div><div class="line">    &lt;/div&gt;  </div><div class="line">  )</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对象用作枚举，使用场景很灵活，下面例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">function FooBarOrFooOrBar(&#123; isFoo, isBar &#125;) &#123;</div><div class="line">  const key = `$&#123;isFoo&#125;-$&#123;isBar&#125;`;</div><div class="line">  return (</div><div class="line">    &lt;div&gt;</div><div class="line">      &#123;&#123;</div><div class="line">        [&apos;true-true&apos;]: &lt;FooBar /&gt;,</div><div class="line">        [&apos;true-false&apos;]: &lt;Foo /&gt;,</div><div class="line">        [&apos;false-true&apos;]: &lt;Bar /&gt;,</div><div class="line">        [&apos;false-false&apos;]: null,</div><div class="line">      &#125;[key]&#125;</div><div class="line">    &lt;/div&gt;</div><div class="line">  );</div><div class="line">&#125;</div><div class="line">FooBarOrFooOrBar.propTypes = &#123;</div><div class="line">  isFoo: React.PropTypes.boolean.isRequired,</div><div class="line">  isBar: React.PropTypes.boolean.isRequired</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="6-多层条件渲染"><a href="#6-多层条件渲染" class="headerlink" title="6.多层条件渲染"></a>6.多层条件渲染</h2><p>我们有时候可能碰到嵌套条件选择渲染的情况。</p>
+<p>例如，List组件可能显示一个list,或者一个empty text提示，或者什么多没有：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">function List(&#123; list &#125;) &#123;</div><div class="line">  const isNull = !list;</div><div class="line">  const isEmpty = !isNull &amp;&amp; !list.length;</div><div class="line"></div><div class="line">  return (</div><div class="line">    &lt;div&gt;</div><div class="line">      &#123; isNull</div><div class="line">          ? null</div><div class="line">          : ( isEmpty</div><div class="line">              ? &lt;p&gt;Sorry, the list is empty&lt;/p&gt;</div><div class="line">              : &lt;div&gt;&#123;list.map(item =&gt; &lt;ListItem item=&#123;item&#125; /&gt;)&#125;&lt;/div&gt;</div><div class="line">          )</div><div class="line">      &#125;</div><div class="line">    &lt;/div&gt;</div><div class="line">  );</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 实例</div><div class="line">&lt;List list=&#123;null&#125; /&gt; // &lt;div&gt;&lt;/div&gt;</div><div class="line">&lt;List list=&#123;[]&#125; /&gt; // &lt;div&gt;&lt;p&gt;Sorry, the list is empty&lt;/p&gt;&lt;/div&gt;</div><div class="line">&lt;List list=&#123;[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]&#125; /&gt; // &lt;div&gt;&lt;div&gt;a&lt;/div&gt;&lt;div&gt;b&lt;/div&gt;&lt;div&gt;c&lt;/div&gt;&lt;/div&gt;</div></pre></td></tr></table></figure>
+<p>但是最好保持嵌套的层数最小化，这样代码可读性更强。<strong>可以将组件划分成更小的组件的方式</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">function List(&#123; list &#125;) &#123;</div><div class="line">  const isList = list &amp;&amp; list.length;</div><div class="line"></div><div class="line">  return (</div><div class="line">    &lt;div&gt;</div><div class="line">      &#123; isList</div><div class="line">          ? &lt;div&gt;&#123;list.map(item =&gt; &lt;ListItem item=&#123;item&#125; /&gt;)&#125;&lt;/div&gt;</div><div class="line">          : &lt;NoList isNull=&#123;!list&#125; isEmpty=&#123;list &amp;&amp; !list.empty&#125; /&gt;</div><div class="line">      &#125;</div><div class="line">    &lt;/div&gt;</div><div class="line">  );</div><div class="line">&#125;</div><div class="line"></div><div class="line">function NoList(&#123; isNull, isEmpty &#125;) &#123;</div><div class="line">  return (!isNull &amp;&amp; isEmpty) &amp;&amp; &lt;p&gt;Sorry, the list is empty&lt;/p&gt;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="7-高阶组件用作条件渲染"><a href="#7-高阶组件用作条件渲染" class="headerlink" title="7.高阶组件用作条件渲染"></a>7.高阶组件用作条件渲染</h2><p><strong>HOCs</strong> 在React中很适合条件渲染。HOCs的一种使用方式就是改变组件的外观。</p>
+<p>例如使用高阶组件来展示一个加载显示器或者一个想要的组件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">function withLoadingIndicator(Component) &#123;</div><div class="line">  return function EnhancedComponent(&#123; isLoading, ...props &#125;) &#123;</div><div class="line">    if (!isLoading) &#123;</div><div class="line">      return &lt;Component &#123; ...props &#125; /&gt;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return &lt;div&gt;&lt;p&gt;Loading...&lt;/p&gt;&lt;/div&gt;;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 使用</div><div class="line">const ListWithLoadingIndicator = withLoadingIndicator(List);</div><div class="line"></div><div class="line">&lt;ListWithLoadingIndicator</div><div class="line">  isLoading=&#123;props.isLoading&#125;</div><div class="line">  list=&#123;props.list&#125;</div><div class="line">/&gt;</div></pre></td></tr></table></figure>
+<p>这个示例中，List组件能关注渲染list上，而不必担心loading状态，另外，HOCs可以屏蔽list为null或empty的情况。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>使用上面的哪一种条件渲染可以根据下面的一些情况而定：</p>
+<ul>
+<li><p>if-else</p>
+<ul>
+<li>最简单的条件渲染</li>
+<li>适用于新手</li>
+<li>使用if,从渲染方法中返回null提前退出函数</li>
+</ul>
+</li>
+<li><p>三元操作符</p>
+<ul>
+<li>比if-else更好，优先使用</li>
+<li>比if-else更加简洁</li>
+</ul>
+</li>
+<li><p>逻辑 ‘&amp;&amp;’ 操作符</p>
+<ul>
+<li>不返回元素就返回null时使用</li>
+</ul>
+</li>
+<li><p>switch…case</p>
+<ul>
+<li>比较冗长</li>
+<li>可以通过立即调用函数内联使用</li>
+<li>使用枚举的方式代替这种方式更好</li>
+</ul>
+</li>
+<li><p>枚举(enums)</p>
+<ul>
+<li>使用于不同的状态使用</li>
+<li>超过一种条件选择时使用</li>
+</ul>
+</li>
+<li><p>多层次条件选择渲染</p>
+<ul>
+<li>避免使用这种方式对可读性的影响</li>
+<li>将组件划分为更小的组件，小组件自身带有条件选择</li>
+<li>偏向于使用高阶组件(HOCs)</li>
+</ul>
+</li>
+<li><p>HOCs</p>
+<ul>
+<li>使用高阶组件而屏蔽条件渲染</li>
+<li>组件能关注主要的逻辑目的</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/22/git-常用命令行操作/" rel="next" title="git 常用命令行操作">
+                <i class="fa fa-chevron-left"></i> git 常用命令行操作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/02/23/React-中的条件渲染/"
+           data-title="React 中的条件渲染" data-url="http://yoursite.com/2017/02/23/React-中的条件渲染/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/tiger.png"
+               alt="James Sawyer" />
+          <p class="site-author-name" itemprop="name">James Sawyer</p>
+          <p class="site-description motion-element" itemprop="description">每天学一点，进步一点</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-if-语句"><span class="nav-number">1.</span> <span class="nav-text">1.if 语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-三元操作符"><span class="nav-number">2.</span> <span class="nav-text">2.三元操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-逻辑-‘-amp-amp-’-操作符"><span class="nav-number">3.</span> <span class="nav-text">3.逻辑 ‘&&’ 操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-switch…case语句"><span class="nav-number">4.</span> <span class="nav-text">4.switch…case语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-枚举-Enums"><span class="nav-number">5.</span> <span class="nav-text">5.枚举(Enums)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-多层条件渲染"><span class="nav-number">6.</span> <span class="nav-text">6.多层条件渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-高阶组件用作条件渲染"><span class="nav-number">7.</span> <span class="nav-text">7.高阶组件用作条件渲染</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number"></span> <span class="nav-text">总结</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">James Sawyer</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"qwt1990"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("ePwCvagLRitGzHKphj2DQigL-gzGzoHsz", "9p3IqIL6dntfU6aHWk5G6OTx");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>
